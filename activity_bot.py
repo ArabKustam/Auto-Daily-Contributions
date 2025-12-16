@@ -86,6 +86,11 @@ def main():
     # 4. Git push
     # Push all commits at once at the end
     print("--- Pushing changes to remote ---")
+    
+    # Try to pull first to avoid conflicts
+    print("Pulling latest changes...")
+    run_git_command(["git", "pull", "--rebase", "--autostash"])
+    
     if run_git_command(["git", "push"]):
         print("Successfully pushed to remote.")
     else:
