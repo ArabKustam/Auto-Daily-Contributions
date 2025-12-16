@@ -39,10 +39,6 @@
 python activity_bot.py
 ```
 
-## ⚙️ CI/CD Integration
-
-The repository includes a pre-configured GitHub Actions workflow (`.github/workflows/daily_contribution.yml`) that executes the bot daily at **02:30 UTC**.
-
 ## 📜 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
