@@ -1,9 +1,0 @@
-__pycache__/
-*.py[cod]
-*$py.class
-.vscode/
-.idea/
-*.log
-daily_activity.txt
-ds_store
-Thumbs.db
