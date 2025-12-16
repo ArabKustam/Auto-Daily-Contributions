@@ -28,3 +28,4 @@ jobs:
       - name: Run Activity Bot
         run: |
           python activity_bot.py
+          git push
