@@ -1,4 +1,4 @@
 @echo off
 cd /d "%~dp0"
-python activity_bot.py
+python activity_bot.py --force
 pause

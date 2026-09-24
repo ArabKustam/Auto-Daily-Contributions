@@ -1,0 +1,33 @@
+name: Daily Contribution
+
+on:
+  schedule:
+    # Runs daily at 14:00 UTC (19:00 local time UTC+5)
+    - cron: '0 14 * * *'
+  workflow_dispatch: # Allows manual trigger from GitHub Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  daily-update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "ArabKustam"
+          git config --global user.email "dipnermark@gmail.com"
+
+      - name: Run Activity Bot
+        run: |
+          python activity_bot.py
