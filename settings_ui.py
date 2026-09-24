@@ -22,11 +22,19 @@ def get_startup_path():
 def is_autostart_enabled():
     return os.path.exists(get_startup_path())
 
+def get_pythonw_path():
+    py_dir = os.path.dirname(sys.executable)
+    pyw = os.path.join(py_dir, "pythonw.exe")
+    if os.path.exists(pyw):
+        return pyw
+    return "pythonw.exe"
+
 def toggle_autostart():
     startup_file = get_startup_path()
     if var_autostart.get():
         try:
-            bat_content = f'@echo off\ncd /d "{REPO_PATH}"\nstart "" pythonw activity_bot.py\n'
+            pyw = get_pythonw_path()
+            bat_content = f'@echo off\ncd /d "{REPO_PATH}"\nstart "" "{pyw}" activity_bot.py\n'
             with open(startup_file, "w", encoding="utf-8") as f:
                 f.write(bat_content)
             print(f"Created startup file: {startup_file}")
@@ -52,12 +60,13 @@ def is_scheduler_enabled():
 def toggle_scheduler():
     if var_scheduler.get():
         try:
+            pyw = get_pythonw_path()
             ps_cmd = (
-                f'$action = New-ScheduledTaskAction -Execute "pythonw.exe" '
+                f'$action = New-ScheduledTaskAction -Execute "{pyw}" '
                 f'-Argument "\`"{REPO_PATH}\\activity_bot.py\`"" -WorkingDirectory "{REPO_PATH}"; '
                 f'$trigger = New-ScheduledTaskTrigger -Daily -At "12:00"; '
                 f'$settings = New-ScheduledTaskSettingsSet -StartWhenAvailable -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries; '
-                f'Register-ScheduledTask -TaskName "{TASK_NAME}" -Action $action -Trigger $trigger -Settings $settings -Description "Daily GitHub contributions automation bot"'
+                f'Register-ScheduledTask -TaskName "{TASK_NAME}" -Action $action -Trigger $trigger -Settings $settings -Description "Daily GitHub contributions automation bot" -Force'
             )
             res = subprocess.run(["powershell", "-NoProfile", "-Command", ps_cmd], capture_output=True, text=True)
             if res.returncode == 0:
