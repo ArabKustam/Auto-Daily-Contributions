@@ -6,3 +6,5 @@ __pycache__/
 *.log
 ds_store
 Thumbs.db
+repos/
+bot_state.json

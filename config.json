@@ -1,4 +1,48 @@
 {
-    "min_commits": 1,
-    "max_commits": 7
+    "repositories": [
+        "c:/Users/MARK/Desktop/auto day contibution",
+        "c:/Users/MARK/Desktop/auto day contibution/repos/cpp_calculator",
+        "c:/Users/MARK/Desktop/auto day contibution/repos/sort-simulation",
+        "c:/Users/MARK/Desktop/auto day contibution/repos/rustplus-desktop",
+        "c:/Users/MARK/Desktop/auto day contibution/repos/backshot-roulette-helper",
+        "c:/Users/MARK/Desktop/auto day contibution/repos/cryptography"
+    ],
+    "normal_day": {
+        "min_commits": 1,
+        "max_commits": 6
+    },
+    "special_day": {
+        "chance": 0.15,
+        "min_commits": 12,
+        "max_commits": 48
+    },
+    "marathons": {
+        "trio_3_days": {
+            "chance": 0.10,
+            "min_commits": 10,
+            "max_commits": 59
+        },
+        "week_7_days": {
+            "chance": 0.05,
+            "min_commits": 10,
+            "max_commits": 59
+        }
+    },
+    "commit_messages": [
+        "fix: minor bug fixes",
+        "update dependencies",
+        "refactor: clean up code",
+        "chore: maintenance",
+        "fix typo",
+        "docs: update documentation",
+        "style: formatting",
+        "update config",
+        "minor improvements",
+        "refactor: optimize internal logic",
+        "fix: edge case handling",
+        "perf: small optimizations",
+        "sync changes",
+        "cleanup unused code",
+        "wip: self review"
+    ]
 }
