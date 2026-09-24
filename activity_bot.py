@@ -264,10 +264,38 @@ def sync_and_commit(repo_dir, commit_msg):
     
     if ok:
         log(f"Pushed commit '{commit_msg}' to {repo_name}")
+        rel_file = os.path.relpath(changed_file, repo_dir) if changed_file else "empty_commit"
+        record_history(repo_name, rel_file, commit_msg)
         return True
     else:
         log(f"Push failed in {repo_name}")
         return False
+
+def record_history(repo_name, changed_file, commit_msg):
+    hist_file = os.path.join(REPO_PATH, "activity_history.json")
+    history = []
+    if os.path.exists(hist_file):
+        try:
+            with open(hist_file, "r", encoding="utf-8") as f:
+                history = json.load(f)
+        except Exception:
+            history = []
+    state = load_state()
+    entry = {
+        "timestamp": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "date": datetime.date.today().strftime("%Y-%m-%d"),
+        "repo": repo_name,
+        "file": changed_file,
+        "message": commit_msg,
+        "day_type": state.get("today_day_type", "Normal Day"),
+        "status": "success"
+    }
+    history.append(entry)
+    try:
+        with open(hist_file, "w", encoding="utf-8") as f:
+            json.dump(history, f, indent=2, ensure_ascii=False)
+    except Exception as e:
+        log(f"Error saving history: {e}")
 
 def determine_today_plan(config, state):
     """

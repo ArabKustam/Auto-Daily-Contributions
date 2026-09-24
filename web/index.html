@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub Contributions Analytics & Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h2>AutoCommit Pro</h2>
+          <span class="brand-badge">v2.5 Live</span>
+        </div>
+      </div>
+
+      <nav class="nav-menu">
+        <a href="#dashboard" class="nav-item active" data-tab="dashboard">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+          Дашборд
+        </a>
+        <a href="#analytics" class="nav-item" data-tab="analytics">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+          Аналитика файлов
+        </a>
+        <a href="#logs" class="nav-item" data-tab="logs">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"/><line x1="12" x2="20" y1="19" y2="19"/></svg>
+          Живые логи
+        </a>
+        <a href="#settings" class="nav-item" data-tab="settings">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+          Настройки & Марафоны
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-card">
+          <div class="user-avatar">AK</div>
+          <div class="user-meta">
+            <span class="user-name">ArabKustam</span>
+            <span class="user-email">dipnermark@gmail.com</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Top Navigation Bar -->
+      <header class="topbar">
+        <div class="topbar-title">
+          <h1 id="page-title">Обзор активности</h1>
+          <span class="last-synced" id="last-sync-time">Синхронизировано только что</span>
+        </div>
+        <div class="topbar-actions">
+          <button class="btn btn-secondary" id="btn-open-repos" title="Открыть папку с репозиториями">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/></svg>
+            Папка repos/
+          </button>
+          <button class="btn btn-primary" id="btn-run-top">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            Запустить бота сейчас
+          </button>
+        </div>
+      </header>
+
+      <!-- TAB 1: DASHBOARD -->
+      <section id="tab-dashboard" class="tab-pane active">
+        <!-- Key Metrics Cards -->
+        <div class="stats-grid">
+          <div class="stat-card stat-primary">
+            <div class="stat-header">
+              <span class="stat-label">Всего коммитов / пушей</span>
+              <div class="stat-icon-wrapper">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><line x1="1.05" x2="4.35" y1="12" y2="12"/><line x1="19.65" x2="22.95" y1="12" y2="12"/><line x1="12" x2="12" y1="1.05" y2="4.35"/><line x1="12" x2="12" y1="19.65" y2="22.95"/></svg>
+              </div>
+            </div>
+            <div class="stat-value" id="stat-total-commits">0</div>
+            <div class="stat-sub">
+              <span class="trend-up" id="stat-today-done">+0 сегодня</span>
+              <span class="stat-desc">по всем репозиториям</span>
+            </div>
+          </div>
+
+          <div class="stat-card stat-success">
+            <div class="stat-header">
+              <span class="stat-label">Цель на сегодня</span>
+              <div class="stat-icon-wrapper">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              </div>
+            </div>
+            <div class="stat-value" id="stat-today-progress">0 / 0</div>
+            <div class="progress-bar-wrapper">
+              <div class="progress-bar-fill" id="stat-progress-bar" style="width: 0%"></div>
+            </div>
+            <div class="stat-sub">
+              <span id="stat-today-status-text">Завершено</span>
+            </div>
+          </div>
+
+          <div class="stat-card stat-warning">
+            <div class="stat-header">
+              <span class="stat-label">Текущий режим дня</span>
+              <div class="stat-icon-wrapper">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              </div>
+            </div>
+            <div class="stat-badge-display">
+              <span class="badge" id="stat-mode-badge">Обычный день</span>
+            </div>
+            <div class="stat-sub">
+              <span id="stat-marathon-desc">Марафон не активен</span>
+            </div>
+          </div>
+
+          <div class="stat-card stat-info">
+            <div class="stat-header">
+              <span class="stat-label">Репозиториев в ротации</span>
+              <div class="stat-icon-wrapper">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>
+              </div>
+            </div>
+            <div class="stat-value" id="stat-repos-count">0</div>
+            <div class="stat-sub">
+              <span class="text-muted" id="stat-reboot-guard">🛡️ Защита от перезагрузок: ВКЛ</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Heatmap & Distribution Row -->
+        <div class="dashboard-row">
+          <div class="card card-heatmap">
+            <div class="card-header">
+              <div class="card-title-group">
+                <h3>Карта активности по дням</h3>
+                <p>Аналог сетки контрибуций GitHub за последние недели</p>
+              </div>
+            </div>
+            <div class="heatmap-container" id="heatmap-grid">
+              <!-- Dynamically populated squares -->
+            </div>
+            <div class="heatmap-legend">
+              <span>Меньше</span>
+              <div class="legend-cell lvl-0"></div>
+              <div class="legend-cell lvl-1"></div>
+              <div class="legend-cell lvl-2"></div>
+              <div class="legend-cell lvl-3"></div>
+              <div class="legend-cell lvl-4"></div>
+              <span>Больше</span>
+            </div>
+          </div>
+
+          <div class="card card-donut">
+            <div class="card-header">
+              <div class="card-title-group">
+                <h3>Типы коммитов</h3>
+                <p>Распределение категорий изменений</p>
+              </div>
+            </div>
+            <div class="category-bars" id="category-bars-list">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Repositories Overview Cards -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title-group">
+              <h3>Подключенные репозитории</h3>
+              <p>Статистика изменений по каждому вашему проекту</p>
+            </div>
+          </div>
+          <div class="repos-grid" id="repos-overview-grid">
+            <!-- Repos rendered dynamically -->
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: ANALYTICS (WHERE, WHAT, HOW MANY TIMES) -->
+      <section id="tab-analytics" class="tab-pane">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title-group">
+              <h3>Детальный анализ изменений по файлам</h3>
+              <p>Точная статистика: какие файлы изменялись, сколько раз и в каких репозиториях</p>
+            </div>
+            <div class="search-box">
+              <input type="text" id="analytics-search" placeholder="Поиск по файлу или репозиторию...">
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="data-table" id="files-analytics-table">
+              <thead>
+                <tr>
+                  <th>Репозиторий</th>
+                  <th>Изменяемый файл</th>
+                  <th>Тип файла</th>
+                  <th>Кол-во правок</th>
+                  <th>Тип изменений</th>
+                  <th>Последнее изменение</th>
+                  <th>Статус</th>
+                </tr>
+              </thead>
+              <tbody id="files-table-body">
+                <!-- Dynamically loaded -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: LIVE LOGS -->
+      <section id="tab-logs" class="tab-pane">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title-group">
+              <h3>История выполненных действий и пушей</h3>
+              <p>Хронологический список всех коммитов и безопасных правок в коде</p>
+            </div>
+            <div class="logs-controls">
+              <select id="log-filter-repo">
+                <option value="all">Все репозитории</option>
+              </select>
+              <button class="btn btn-sm btn-secondary" id="btn-refresh-logs">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 21h5v-5"/></svg>
+                Обновить
+              </button>
+            </div>
+          </div>
+
+          <div class="log-entries-list" id="log-entries-container">
+            <!-- Dynamically populated -->
+          </div>
+
+          <!-- Raw terminal view -->
+          <div class="terminal-container">
+            <div class="terminal-header">
+              <span class="terminal-title">activity.log (Консольный вывод)</span>
+            </div>
+            <pre class="terminal-body" id="raw-log-body">Загрузка логов...</pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: SETTINGS & MARATHONS -->
+      <section id="tab-settings" class="tab-pane">
+        <div class="settings-grid">
+          <!-- Marathons Control Card -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title-group">
+                <h3>Управление марафонами и спринтами</h3>
+                <p>Запуск мощных всплесков активности (от 10 до 59 коммитов/день)</p>
+              </div>
+            </div>
+
+            <div class="marathon-banner" id="marathon-live-banner">
+              <div class="marathon-status-icon">🔥</div>
+              <div class="marathon-status-content">
+                <h4 id="marathon-status-heading">Марафон не запущен</h4>
+                <p id="marathon-status-sub">Бот работает в обычном ежедневном режиме с рандомными шансами особых дней.</p>
+              </div>
+            </div>
+
+            <div class="sprint-launchers">
+              <div class="sprint-card">
+                <div class="sprint-info">
+                  <h4>Троица дней (3 дня подряд)</h4>
+                  <p>10–59 пушей в день в 1–2 закрепленных репозитория.</p>
+                </div>
+                <button class="btn btn-warning" id="btn-start-trio">Запустить на 3 дня</button>
+              </div>
+
+              <div class="sprint-card">
+                <div class="sprint-info">
+                  <h4>Особая неделя (7 дней подряд)</h4>
+                  <p>10–59 пушей в день на протяжении всей недели.</p>
+                </div>
+                <button class="btn btn-purple" id="btn-start-week">Запустить на 7 дней</button>
+              </div>
+
+              <div class="sprint-card" id="card-reset-marathon" style="display: none;">
+                <div class="sprint-info">
+                  <h4>Остановить активный марафон</h4>
+                  <p>Вернуться к обычному ежедневному графику прямо сейчас.</p>
+                </div>
+                <button class="btn btn-danger" id="btn-stop-marathon">Сбросить марафон</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Automation & Scheduler Card -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title-group">
+                <h3>Службы автозапуска Windows</h3>
+                <p>Настройка автоматического выполнения без всплывающих окон</p>
+              </div>
+            </div>
+
+            <div class="toggle-group">
+              <div class="toggle-item">
+                <div class="toggle-meta">
+                  <span class="toggle-title">Планировщик заданий Windows (Task Scheduler)</span>
+                  <span class="toggle-desc">Запуск каждый день в 12:00 в тихом фоне (pythonw.exe). Если ПК выключен, задача запускается сразу при включении.</span>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="chk-scheduler">
+                  <span class="slider"></span>
+                </label>
+              </div>
+
+              <div class="toggle-item">
+                <div class="toggle-meta">
+                  <span class="toggle-title">Автозагрузка при старте Windows (Startup)</span>
+                  <span class="toggle-desc">Запуск бота при входе пользователя в систему с активной защитой от повторных коммитов.</span>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="chk-autostart">
+                  <span class="slider"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Commit Ranges Configuration Form -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title-group">
+                <h3>Диапазоны коммитов</h3>
+                <p>Настройте количество коммитов и вероятность особых дней</p>
+              </div>
+            </div>
+
+            <form id="settings-form" class="settings-form">
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Обычный день: Мин. коммитов</label>
+                  <input type="number" id="cfg-norm-min" min="1" max="50">
+                </div>
+                <div class="form-group">
+                  <label>Обычный день: Макс. коммитов</label>
+                  <input type="number" id="cfg-norm-max" min="1" max="50">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Особый день (Spike): Мин. коммитов</label>
+                  <input type="number" id="cfg-spec-min" min="1" max="100">
+                </div>
+                <div class="form-group">
+                  <label>Особый день (Spike): Макс. коммитов</label>
+                  <input type="number" id="cfg-spec-max" min="1" max="100">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Марафоны (3 и 7 дней): Мин. коммитов</label>
+                  <input type="number" id="cfg-mar-min" min="1" max="100">
+                </div>
+                <div class="form-group">
+                  <label>Марафоны (3 и 7 дней): Макс. коммитов</label>
+                  <input type="number" id="cfg-mar-max" min="1" max="100">
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                  Сохранить настройки
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Run Notification Toast -->
+  <div id="toast" class="toast"></div>
+
+  <!-- Live Run Modal -->
+  <div id="run-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Выполнение бота...</h3>
+        <button class="modal-close" id="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="spinner-container" id="modal-spinner">
+          <div class="spinner"></div>
+          <p>Бот выбирает репозиторий, делает изменения и пушит на GitHub...</p>
+        </div>
+        <pre class="modal-log" id="modal-log-output" style="display: none;"></pre>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
