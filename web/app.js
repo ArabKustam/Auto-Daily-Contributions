@@ -540,3 +540,4 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchLogs();
   }, 4000);
 });
+
