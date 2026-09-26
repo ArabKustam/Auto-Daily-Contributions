@@ -540,4 +540,3 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchLogs();
   }, 4000);
 }); 
-// debug: validation checkpoint
