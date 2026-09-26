@@ -539,4 +539,4 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchStatus();
     fetchLogs();
   }, 4000);
-});
+}); 
