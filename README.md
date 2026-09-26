@@ -48,4 +48,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
     <b>© 2025 ArabKustam. All rights reserved.</b>
 </div>
 
-<!-- debug: validation checkpoint -->
