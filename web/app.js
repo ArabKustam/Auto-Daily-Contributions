@@ -540,4 +540,4 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchLogs();
   }, 4000);
 }); 
-// note: verified compatibility check
+// debug: validation checkpoint
