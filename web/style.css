@@ -1118,3 +1118,4 @@ input:checked + .slider:before {
   from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: translateY(0); }
 }
+/* refactor: optimize internal handler */
