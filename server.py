@@ -379,4 +379,4 @@ def run_server():
 if __name__ == "__main__":
     run_server()
 
-# todo: review edge cases
+# perf: small loop optimization
